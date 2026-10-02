@@ -1,12 +1,12 @@
-# SafeAI
+# VastCAM
 
-SafeAI is an early-warning model for warehouse footage. Given a short clip from before an incident, it returns the probability that a person and a machine are about to collide. It does not predict the exact second of impact.
+VastCAM is an early-warning model for warehouse footage. Given a short clip from before an incident, it returns the probability that a person and a machine are about to collide. It does not predict the exact second of impact.
 
 The base model is [Valen-Preview-0923](https://huggingface.co/Valen-Team/Valen-Preview-0923), a decision model on Qwen3.5-2B. It scores a yes/no question over video instead of generating a caption. Fine-tuning continues from that checkpoint with Valen's supervised trainer. Weights & Biases is used to log the run.
 
 ## Goal
 
-Warehouse captions rarely say "collision." They describe a person walking up to a forklift, grabbing it, or moving out of its way, and robots sharing the floor with workers. SafeAI treats that lead-up as the signal.
+Warehouse captions rarely say "collision." They describe a person walking up to a forklift, grabbing it, or moving out of its way, and robots sharing the floor with workers. VastCAM treats that lead-up as the signal.
 
 At inference the model sees a few frames and answers one question: will a collision happen within the next few seconds? The output is a single probability. The time of impact stays unknown.
 
