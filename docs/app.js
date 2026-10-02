@@ -11,15 +11,12 @@ const probEl = document.querySelector("#prob");
 const titleEl = document.querySelector("#clip-title");
 const boxesEl = document.querySelector("#boxes");
 const statusEl = document.querySelector("#status");
-const keyInput = document.querySelector("#key");
 const modelSelect = document.querySelector("#model");
 const fileInput = document.querySelector("#file");
 
 let catalog = null;
 let clip = null;
 let objectUrl = null;
-const savedKey = sessionStorage.getItem("vastcam-key");
-if (savedKey) keyInput.value = savedKey;
 
 function setStatus(text) { statusEl.textContent = text; }
 
@@ -169,64 +166,28 @@ async function grab(video, t) {
   return btoa(binary);
 }
 
-function probabilityFrom(body) {
-  const choice = body.choices[0];
-  const text = (choice.message.content || "").trim().toLowerCase();
-  const steps = (choice.logprobs && choice.logprobs.content) || [];
-  const mass = { true: 0, false: 0 };
-  if (steps[0]) {
-    for (const item of steps[0].top_logprobs || []) {
-      const key = item.token.trim().toLowerCase();
-      if (key === "true" || key === "false") mass[key] += Math.exp(item.logprob);
-    }
-  }
-  if (mass.true + mass.false > 0) return mass.true / (mass.true + mass.false);
-  if (text.startsWith("true")) return 1;
-  if (text.startsWith("false")) return 0;
-  return 0.5;
-}
-
-async function scoreWindow(jpegA, jpegB, apiKey, model) {
-  const content = [
-    { type: "text", text: QUESTION },
-    { type: "image_url", image_url: { url: `data:image/jpeg;base64,${jpegA}` } },
-    { type: "image_url", image_url: { url: `data:image/jpeg;base64,${jpegB}` } },
-  ];
-  const response = await fetch("https://api.inference.wandb.ai/v1/chat/completions", {
+async function scoreWindow(jpegA, jpegB, model) {
+  const response = await fetch("api/score", {
     method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-      "OpenAI-Project": "vastdata/team-43",
-    },
-    body: JSON.stringify({
-      model,
-      messages: [
-        { role: "system", content: "Warehouse camera. Answer with only true or false." },
-        { role: "user", content },
-      ],
-      max_tokens: 4,
-      temperature: 0,
-      logprobs: true,
-      top_logprobs: 10,
-      chat_template_kwargs: { enable_thinking: false },
-    }),
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ model, images: [jpegA, jpegB] }),
   });
-  const body = await response.json();
+  let body = {};
+  try { body = await response.json(); } catch (err) { body = {}; }
   if (!response.ok) {
-    const message = (body.error && body.error.message) || body.message || response.statusText;
-    throw new Error(message);
+    if (response.status === 404) {
+      throw new Error("Live scoring is served with the local demo, not from GitHub Pages. Open http://127.0.0.1:8765/ on the machine running the demo.");
+    }
+    throw new Error(body.error || response.statusText || "Scoring failed");
   }
-  return probabilityFrom(body);
+  return body.p;
 }
 
 async function scoreUpload(file) {
-  const apiKey = keyInput.value.trim();
-  if (!apiKey) {
-    setStatus("Paste a W&B key to score an upload. Sample clips still play without one.");
+  if (location.hostname.endsWith("github.io")) {
+    setStatus("GitHub Pages cannot call W&B from the browser. Sample clips still play here. Live scoring is at http://127.0.0.1:8765/ on the demo machine.");
     return;
   }
-  sessionStorage.setItem("vastcam-key", apiKey);
   if (objectUrl) URL.revokeObjectURL(objectUrl);
   objectUrl = URL.createObjectURL(file);
   const video = document.createElement("video");
@@ -245,7 +206,7 @@ async function scoreUpload(file) {
     setStatus(`Scoring window ${i + 1} of ${times.length} on W&B…`);
     const a = await grab(video, times[i]);
     const b = await grab(video, times[i] + 0.1);
-    const p = await scoreWindow(a, b, apiKey, model);
+    const p = await scoreWindow(a, b, model);
     probs.push({ t: times[i], p: Math.round(p * 1000) / 1000 });
   }
   loadClip({

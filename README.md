@@ -10,7 +10,7 @@ Warehouse captions rarely say "collision." They describe a person walking up to 
 
 At inference the model sees a few frames and answers one question: will a collision happen within the next few seconds? The output is a single probability. The time of impact stays unknown.
 
-The demo page is [`docs/`](docs/index.html). GitHub Pages serves it, and live scoring calls W&B Inference from the browser. Sample clips play without a key. An uploaded clip needs a W&B key typed into the page; that key is not part of the repository.
+The demo page is [`docs/`](docs/index.html). Sample clips play on GitHub Pages. Live scoring runs on the local server, `python3 docs/server.py`, at `http://127.0.0.1:8765/`, because W&B does not let a browser read its inference reply.
 
 ## What a training example is
 

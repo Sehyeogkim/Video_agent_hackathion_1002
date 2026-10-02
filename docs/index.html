@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>VastCAM</title>
+  <link rel="icon" href="data:,">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -33,10 +34,6 @@
           <input id="file" type="file" accept="video/mp4,video/webm,video/*">
         </label>
         <label>
-          W&amp;B key
-          <input id="key" type="password" autocomplete="off" placeholder="stays in this browser tab">
-        </label>
-        <label>
           Model
           <select id="model">
             <option value="Qwen/Qwen3.6-27B" selected>Qwen3.6-27B base, hosted on W&amp;B</option>
@@ -54,7 +51,7 @@
       <p class="prob-label">P(collision in the next few seconds)</p>
       <svg id="chart" viewBox="0 0 320 140" role="img" aria-label="Collision probability over time"></svg>
       <ul id="boxes" class="boxes"></ul>
-      <p class="note">Sample clips play stored base-model scores and their YOLO boxes with no key. Scoring an upload sends frames from this browser to <code>api.inference.wandb.ai</code>. The key is not stored in the repository. YOLO is not a W&amp;B model, so an upload has a probability trace and no boxes.</p>
+      <p class="note">Sample clips play stored scores and YOLO boxes. Live scoring uses this site’s <code>/api/score</code> path, which calls W&amp;B from the server. GitHub Pages cannot do that, because W&amp;B does not allow a browser to read its reply. An upload has a probability trace and no YOLO boxes.</p>
     </aside>
   </main>
   <script src="app.js"></script>
