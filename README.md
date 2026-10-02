@@ -171,4 +171,29 @@ Collision downloads by the caption phrase that selected them:
 | runs away | 0 | 0 | 1 |
 | No-collision downloads | 24 | 8 | 8 |
 
+## Baseline before the fine-tune
+
+The same eval and test pairs were scored with untouched [Qwen3.6-27B](https://wandb.ai/vastdata/team-43/runs/safeai-collision), thinking turned off, on the same true/false question. The probability is the softmax of the `true` and `false` token logprobs. A pair is called a collision when that probability is at least 0.5.
+
+| | Eval | Test |
+|---|---:|---:|
+| Pairs | 80 | 80 |
+| Accuracy | 0.513 | 0.500 |
+| Precision | 1.000 | 0.000 |
+| Recall | 0.025 | 0.000 |
+| Collision pairs caught | 1 / 40 | 0 / 40 |
+| No-collision pairs caught | 40 / 40 | 40 / 40 |
+| Mean P(collision) on collision pairs | 0.142 | 0.075 |
+| Mean P(collision) on no-collision pairs | 0.068 | 0.101 |
+
+The base model answers `false` on 159 of 160 held-out pairs. Accuracy sits at chance because the splits are balanced. On the test split the average collision probability is higher for the no-collision pairs than for the collision pairs.
+
+The figure below follows three collision downloads where that score moves the most: `yes_007` and `yes_012` from eval, and `yes_020` from test. Each point is a two-frame window, 0.1 seconds apart, stepped every 0.4 seconds through the 5-second download. The dashed line is 0.5. The score rises while the person approaches the forklift in `yes_007` and `yes_012`, and it crosses 0.5 once, at 0.8 seconds in `yes_012`. It stays under the line for the rest of all three clips.
+
+![Base-model collision probability across three clips](finetune/baseline-timelines.png)
+
+Per-pair scores are in `finetune/baseline_predictions.jsonl`. The window scores are in `finetune/baseline_timelines.jsonl`. The fine-tuned adapter `safeai-collision:v1` is stored, and the inference host does not serve it yet, so the same pairs can be scored again when that checkpoint is available.
+
+The review pack, with the plots and five held-out clip pairs, is in [`report/`](report/README.md).
+
 `collision-data/` is an earlier, smaller pull (one contact clip and one calm clip). The warehouse set above is the one to train on.

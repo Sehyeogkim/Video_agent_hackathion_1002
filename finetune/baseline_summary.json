@@ -1,0 +1,41 @@
+{
+  "eval": {
+    "n": 80,
+    "accuracy": 0.5125,
+    "precision": 1.0,
+    "recall": 0.025,
+    "f1": 0.0488,
+    "tp": 1,
+    "tn": 40,
+    "fp": 0,
+    "fn": 39,
+    "mean_p_collision_on_true": 0.1424,
+    "mean_p_collision_on_false": 0.0681
+  },
+  "test": {
+    "n": 80,
+    "accuracy": 0.5,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "tp": 0,
+    "tn": 40,
+    "fp": 0,
+    "fn": 40,
+    "mean_p_collision_on_true": 0.0752,
+    "mean_p_collision_on_false": 0.101
+  },
+  "eval_and_test": {
+    "n": 160,
+    "accuracy": 0.5062,
+    "precision": 1.0,
+    "recall": 0.0125,
+    "f1": 0.0247,
+    "tp": 1,
+    "tn": 80,
+    "fp": 0,
+    "fn": 79,
+    "mean_p_collision_on_true": 0.1088,
+    "mean_p_collision_on_false": 0.0846
+  }
+}

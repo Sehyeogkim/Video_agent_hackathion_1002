@@ -1,5 +1,6 @@
 # Downloaded videos and generated clips stay on disk and are not uploaded.
 *.mp4
+!report/clips/*.mp4
 
 __pycache__/
 *.py[cod]

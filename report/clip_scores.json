@@ -1,0 +1,62 @@
+[
+  {
+    "split": "eval",
+    "clip": "yes_007_p00.mp4",
+    "group": "yes_007",
+    "label": "true",
+    "pred": "false",
+    "p_collision": 0.033,
+    "correct": false,
+    "file": "clips/eval_yes_007_p00.mp4",
+    "finetuned_p_collision": null,
+    "finetuned_pred": null
+  },
+  {
+    "split": "eval",
+    "clip": "yes_007_p04.mp4",
+    "group": "yes_007",
+    "label": "true",
+    "pred": "true",
+    "p_collision": 0.5331,
+    "correct": true,
+    "file": "clips/eval_yes_007_p04.mp4",
+    "finetuned_p_collision": null,
+    "finetuned_pred": null
+  },
+  {
+    "split": "eval",
+    "clip": "yes_012_p00.mp4",
+    "group": "yes_012",
+    "label": "true",
+    "pred": "false",
+    "p_collision": 0.053,
+    "correct": false,
+    "file": "clips/eval_yes_012_p00.mp4",
+    "finetuned_p_collision": null,
+    "finetuned_pred": null
+  },
+  {
+    "split": "eval",
+    "clip": "yes_012_p04.mp4",
+    "group": "yes_012",
+    "label": "true",
+    "pred": "false",
+    "p_collision": 0.449,
+    "correct": false,
+    "file": "clips/eval_yes_012_p04.mp4",
+    "finetuned_p_collision": null,
+    "finetuned_pred": null
+  },
+  {
+    "split": "test",
+    "clip": "yes_020_p00.mp4",
+    "group": "yes_020",
+    "label": "true",
+    "pred": "false",
+    "p_collision": 0.4369,
+    "correct": false,
+    "file": "clips/test_yes_020_p00.mp4",
+    "finetuned_p_collision": null,
+    "finetuned_pred": null
+  }
+]

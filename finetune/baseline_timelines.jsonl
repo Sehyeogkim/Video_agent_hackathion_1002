@@ -1,0 +1,36 @@
+{"split": "eval", "group": "yes_007", "phrase": "approaches a forklift", "t": 0.0, "p_collision": 0.0502, "pred": "false"}
+{"split": "eval", "group": "yes_007", "phrase": "approaches a forklift", "t": 0.4, "p_collision": 0.1466, "pred": "false"}
+{"split": "eval", "group": "yes_007", "phrase": "approaches a forklift", "t": 0.8, "p_collision": 0.4211, "pred": "false"}
+{"split": "eval", "group": "yes_007", "phrase": "approaches a forklift", "t": 1.2, "p_collision": 0.3535, "pred": "false"}
+{"split": "eval", "group": "yes_007", "phrase": "approaches a forklift", "t": 1.6, "p_collision": 0.0312, "pred": "false"}
+{"split": "eval", "group": "yes_007", "phrase": "approaches a forklift", "t": 2.0, "p_collision": 0.0734, "pred": "false"}
+{"split": "eval", "group": "yes_007", "phrase": "approaches a forklift", "t": 2.4, "p_collision": 0.3463, "pred": "false"}
+{"split": "eval", "group": "yes_007", "phrase": "approaches a forklift", "t": 2.8, "p_collision": 0.2894, "pred": "false"}
+{"split": "eval", "group": "yes_007", "phrase": "approaches a forklift", "t": 3.2, "p_collision": 0.4968, "pred": "false"}
+{"split": "eval", "group": "yes_007", "phrase": "approaches a forklift", "t": 3.6, "p_collision": 0.2177, "pred": "false"}
+{"split": "eval", "group": "yes_007", "phrase": "approaches a forklift", "t": 4.0, "p_collision": 0.1895, "pred": "false"}
+{"split": "eval", "group": "yes_007", "phrase": "approaches a forklift", "t": 4.4, "p_collision": 0.1951, "pred": "false"}
+{"split": "eval", "group": "yes_012", "phrase": "walks toward a forklift", "t": 0.0, "p_collision": 0.0209, "pred": "false"}
+{"split": "eval", "group": "yes_012", "phrase": "walks toward a forklift", "t": 0.4, "p_collision": 0.1444, "pred": "false"}
+{"split": "eval", "group": "yes_012", "phrase": "walks toward a forklift", "t": 0.8, "p_collision": 0.5093, "pred": "true"}
+{"split": "eval", "group": "yes_012", "phrase": "walks toward a forklift", "t": 1.2, "p_collision": 0.2435, "pred": "false"}
+{"split": "eval", "group": "yes_012", "phrase": "walks toward a forklift", "t": 1.6, "p_collision": 0.06, "pred": "false"}
+{"split": "eval", "group": "yes_012", "phrase": "walks toward a forklift", "t": 2.0, "p_collision": 0.1307, "pred": "false"}
+{"split": "eval", "group": "yes_012", "phrase": "walks toward a forklift", "t": 2.4, "p_collision": 0.1818, "pred": "false"}
+{"split": "eval", "group": "yes_012", "phrase": "walks toward a forklift", "t": 2.8, "p_collision": 0.2135, "pred": "false"}
+{"split": "eval", "group": "yes_012", "phrase": "walks toward a forklift", "t": 3.2, "p_collision": 0.4294, "pred": "false"}
+{"split": "eval", "group": "yes_012", "phrase": "walks toward a forklift", "t": 3.6, "p_collision": 0.2629, "pred": "false"}
+{"split": "eval", "group": "yes_012", "phrase": "walks toward a forklift", "t": 4.0, "p_collision": 0.2137, "pred": "false"}
+{"split": "eval", "group": "yes_012", "phrase": "walks toward a forklift", "t": 4.4, "p_collision": 0.2018, "pred": "false"}
+{"split": "test", "group": "yes_020", "phrase": "toward a forklift", "t": 0.0, "p_collision": 0.3993, "pred": "false"}
+{"split": "test", "group": "yes_020", "phrase": "toward a forklift", "t": 0.4, "p_collision": 0.3198, "pred": "false"}
+{"split": "test", "group": "yes_020", "phrase": "toward a forklift", "t": 0.8, "p_collision": 0.0328, "pred": "false"}
+{"split": "test", "group": "yes_020", "phrase": "toward a forklift", "t": 1.2, "p_collision": 0.1647, "pred": "false"}
+{"split": "test", "group": "yes_020", "phrase": "toward a forklift", "t": 1.6, "p_collision": 0.1984, "pred": "false"}
+{"split": "test", "group": "yes_020", "phrase": "toward a forklift", "t": 2.0, "p_collision": 0.1823, "pred": "false"}
+{"split": "test", "group": "yes_020", "phrase": "toward a forklift", "t": 2.4, "p_collision": 0.1062, "pred": "false"}
+{"split": "test", "group": "yes_020", "phrase": "toward a forklift", "t": 2.8, "p_collision": 0.1631, "pred": "false"}
+{"split": "test", "group": "yes_020", "phrase": "toward a forklift", "t": 3.2, "p_collision": 0.1831, "pred": "false"}
+{"split": "test", "group": "yes_020", "phrase": "toward a forklift", "t": 3.6, "p_collision": 0.0344, "pred": "false"}
+{"split": "test", "group": "yes_020", "phrase": "toward a forklift", "t": 4.0, "p_collision": 0.0361, "pred": "false"}
+{"split": "test", "group": "yes_020", "phrase": "toward a forklift", "t": 4.4, "p_collision": 0.0327, "pred": "false"}
