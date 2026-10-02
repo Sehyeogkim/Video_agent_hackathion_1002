@@ -118,4 +118,12 @@ Valen reads JSONL. Each record is one pair clip, a yes/no question, and a hard l
 
 A negative example uses `"true": 0.0, "false": 1.0`. Training continues from the preview checkpoint at stage `vision_top` (or `warmup` if only the decision head should move). The held-out manifests are the eval and test sets.
 
+## Training curve
+
+The run that is logged today is a LoRA on [Qwen3.6-27B](https://wandb.ai/vastdata/team-43/runs/safeai-collision), trained with W&B Serverless SFT on the 240 train pairs. Batch size is 1 and the learning rate is 5e-5. Each step is one clip. The answer tokens are `true` or `false`.
+
+![Training loss, gradient norm, and throughput](finetune/training-curve.png)
+
+Loss falls below 1e-4 within the first few steps, jumps again near step 120, and finishes near 1e-5. The step metrics are in `finetune/metrics.jsonl`.
+
 `collision-data/` is an earlier, smaller pull (one contact clip and one calm clip). The warehouse set above is the one to train on.
