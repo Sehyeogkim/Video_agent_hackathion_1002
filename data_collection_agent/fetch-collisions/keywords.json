@@ -1,0 +1,86 @@
+{
+  "actors": [
+    "person",
+    "human",
+    "pedestrian",
+    "cyclist",
+    "worker",
+    "robot",
+    "forklift",
+    "vehicle",
+    "car",
+    "truck",
+    "bus",
+    "machine",
+    "agv",
+    "pallet"
+  ],
+  "positive": [
+    "collide",
+    "collides",
+    "collided",
+    "collision",
+    "crash",
+    "crashed",
+    "struck",
+    "strikes",
+    "makes contact",
+    "made contact",
+    "bumped into",
+    "bumps into",
+    "ran into",
+    "runs into",
+    "hit by",
+    "knocked"
+  ],
+  "interaction": [
+    "approaches",
+    "approaching",
+    "runs away",
+    "run away",
+    "runs toward",
+    "walks toward",
+    "toward the forklift",
+    "toward a forklift",
+    "toward the person",
+    "toward a person",
+    "toward the robot",
+    "toward a robot",
+    "interact"
+  ],
+  "contact": [
+    "places their hands",
+    "places his hands",
+    "places her hands",
+    "grabs the side",
+    "grabs the",
+    "climbs onto",
+    "climbs into",
+    "steps onto",
+    "climb onto",
+    "climb into"
+  ],
+  "try": [
+    "into the path",
+    "near miss",
+    "near-miss",
+    "close call"
+  ],
+  "try_reject": [
+    "safely",
+    "yields",
+    "yielded",
+    "suggest a near",
+    "no collision",
+    "no accident",
+    "no near-miss",
+    "no near miss"
+  ],
+  "reject_phrases": [
+    "contact information",
+    "speed bump",
+    "walks into the frame",
+    "into the frame",
+    "disappearing into"
+  ]
+}

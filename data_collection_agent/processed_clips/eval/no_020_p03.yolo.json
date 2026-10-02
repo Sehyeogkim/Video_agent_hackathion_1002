@@ -1,0 +1,1 @@
+{"source": "yolo11_coco", "video_shape": [1080, 1920], "fps": 30.0, "missing": false, "frames": [{"time_sec": 0.6, "matched_time_sec": 0.6, "frame_index": 18, "detections": [{"label": "bench", "confidence": 0.4043, "bbox": [662, 1, 1738, 802]}]}, {"time_sec": 0.7, "matched_time_sec": 0.7, "frame_index": 21, "detections": []}]}
