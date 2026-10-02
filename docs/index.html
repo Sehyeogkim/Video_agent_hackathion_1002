@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VastCAM</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div>
+      <p class="mark">VastCAM</p>
+      <h1>Collision probability as the clip plays</h1>
+    </div>
+    <p class="lede">A two-frame window is scored on Weights &amp; Biases Inference. YOLO boxes are drawn from the clip sidecar. The page itself is static.</p>
+  </header>
+
+  <main>
+    <section class="stage">
+      <div class="screen">
+        <video id="player" playsinline muted></video>
+        <canvas id="overlay"></canvas>
+      </div>
+      <div class="transport">
+        <button id="play" type="button">Play</button>
+        <input id="scrub" type="range" min="0" max="1000" value="0">
+        <span id="clock">0.0s</span>
+      </div>
+      <div id="clips" class="clips"></div>
+      <form id="upload-form" class="upload">
+        <label class="file">
+          Upload a short clip
+          <input id="file" type="file" accept="video/mp4,video/webm,video/*">
+        </label>
+        <label>
+          W&amp;B key
+          <input id="key" type="password" autocomplete="off" placeholder="stays in this browser tab">
+        </label>
+        <label>
+          Model
+          <select id="model">
+            <option value="Qwen/Qwen3.6-27B" selected>Qwen3.6-27B base, hosted on W&amp;B</option>
+            <option value="wandb-artifact:///vastdata/team-43/safeai-collision:step1">VastCAM LoRA (not being served yet)</option>
+          </select>
+        </label>
+        <button id="score" type="submit">Score on W&amp;B</button>
+      </form>
+      <p id="status" class="status"></p>
+    </section>
+
+    <aside>
+      <p class="kicker" id="clip-title">Clip</p>
+      <p class="prob" id="prob">—</p>
+      <p class="prob-label">P(collision in the next few seconds)</p>
+      <svg id="chart" viewBox="0 0 320 140" role="img" aria-label="Collision probability over time"></svg>
+      <ul id="boxes" class="boxes"></ul>
+      <p class="note">Sample clips play stored base-model scores and their YOLO boxes with no key. Scoring an upload sends frames from this browser to <code>api.inference.wandb.ai</code>. The key is not stored in the repository. YOLO is not a W&amp;B model, so an upload has a probability trace and no boxes.</p>
+    </aside>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -10,6 +10,8 @@ Warehouse captions rarely say "collision." They describe a person walking up to 
 
 At inference the model sees a few frames and answers one question: will a collision happen within the next few seconds? The output is a single probability. The time of impact stays unknown.
 
+The demo page is [`docs/`](docs/index.html). GitHub Pages serves it, and live scoring calls W&B Inference from the browser. Sample clips play without a key. An uploaded clip needs a W&B key typed into the page; that key is not part of the repository.
+
 ## What a training example is
 
 Each example is a two-frame clip plus a boolean label and a YOLO sidecar.
