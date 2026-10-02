@@ -30,7 +30,7 @@
       <div id="clips" class="clips"></div>
       <form id="upload-form" class="upload">
         <label class="file">
-          Upload a short clip
+          <span id="file-label">Upload a short clip</span>
           <input id="file" type="file" accept="video/mp4,video/webm,video/*">
         </label>
         <label>
@@ -54,6 +54,6 @@
       <p class="note">Sample clips play stored scores and YOLO boxes. Live scoring uses this site’s <code>/api/score</code> path, which calls W&amp;B from the server. GitHub Pages cannot do that, because W&amp;B does not allow a browser to read its reply. An upload has a probability trace and no YOLO boxes.</p>
     </aside>
   </main>
-  <script src="app.js"></script>
+  <script src="app.js?v=3"></script>
 </body>
 </html>

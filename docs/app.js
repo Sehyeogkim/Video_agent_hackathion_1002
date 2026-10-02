@@ -132,12 +132,14 @@ function renderReadout() {
 function loadClip(next) {
   clip = next;
   titleEl.textContent = next.title || next.id;
-  if (objectUrl) {
+  if (objectUrl && next.video !== objectUrl) {
     URL.revokeObjectURL(objectUrl);
     objectUrl = null;
   }
-  player.src = next.video;
-  player.load();
+  if (player.src !== next.video) {
+    player.src = next.video;
+    player.load();
+  }
   renderReadout();
   for (const button of clipsEl.querySelectorAll("button")) {
     button.classList.toggle("active", button.dataset.id === next.id);
@@ -183,13 +185,30 @@ async function scoreWindow(jpegA, jpegB, model) {
   return body.p;
 }
 
-async function scoreUpload(file) {
-  if (location.hostname.endsWith("github.io")) {
-    setStatus("GitHub Pages cannot call W&B from the browser. Sample clips still play here. Live scoring is at http://127.0.0.1:8765/ on the demo machine.");
-    return;
-  }
+function showUpload(file) {
   if (objectUrl) URL.revokeObjectURL(objectUrl);
   objectUrl = URL.createObjectURL(file);
+  const label = document.querySelector("#file-label");
+  if (label) label.textContent = file.name;
+  loadClip({
+    id: "upload",
+    title: file.name,
+    video: objectUrl,
+    width: 0,
+    height: 0,
+    probs: [],
+    frames: [],
+    note: `Loaded ${file.name}. Press Score on W&B to measure it.`,
+  });
+  player.play().catch(() => {});
+}
+
+async function scoreUpload(file) {
+  showUpload(file);
+  if (location.hostname.endsWith("github.io")) {
+    setStatus(`Loaded ${file.name}. GitHub Pages can play it, but live scoring runs at http://127.0.0.1:8765/.`);
+    return;
+  }
   const video = document.createElement("video");
   video.src = objectUrl;
   video.muted = true;
@@ -200,26 +219,21 @@ async function scoreUpload(file) {
   const duration = Math.min(video.duration || 0, 5);
   const times = [];
   for (let t = 0; t + 0.1 < duration; t = Math.round((t + 0.4) * 10) / 10) times.push(t);
+  if (!times.length) throw new Error("That clip is too short to score.");
   const probs = [];
-  const model = modelSelect.value;
+  const model = (modelSelect && modelSelect.value) || "Qwen/Qwen3.6-27B";
   for (let i = 0; i < times.length; i++) {
-    setStatus(`Scoring window ${i + 1} of ${times.length} on W&B…`);
+    setStatus(`Loaded ${file.name}. Scoring window ${i + 1} of ${times.length}…`);
     const a = await grab(video, times[i]);
     const b = await grab(video, times[i] + 0.1);
     const p = await scoreWindow(a, b, model);
     probs.push({ t: times[i], p: Math.round(p * 1000) / 1000 });
+    clip.probs = probs.slice();
+    renderReadout();
   }
-  loadClip({
-    id: "upload",
-    title: file.name,
-    video: objectUrl,
-    width: video.videoWidth,
-    height: video.videoHeight,
-    probs,
-    frames: [],
-    note: `Scored by ${model}. Uploads do not have YOLO boxes.`,
-  });
-  player.play();
+  clip.width = video.videoWidth;
+  clip.height = video.videoHeight;
+  setStatus(`Scored ${file.name} with ${model}. Uploads do not have YOLO boxes.`);
 }
 
 playBtn.addEventListener("click", () => {
@@ -233,6 +247,10 @@ player.addEventListener("loadeddata", renderReadout);
 scrub.addEventListener("input", () => {
   if (!player.duration) return;
   player.currentTime = (Number(scrub.value) / 1000) * player.duration;
+});
+fileInput.addEventListener("change", () => {
+  const file = fileInput.files && fileInput.files[0];
+  if (file) showUpload(file);
 });
 document.querySelector("#upload-form").addEventListener("submit", (event) => {
   event.preventDefault();
