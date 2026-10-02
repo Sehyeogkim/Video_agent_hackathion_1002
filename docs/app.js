@@ -148,11 +148,14 @@ function loadClip(next) {
 }
 
 async function grab(video, t) {
-  await new Promise((resolve) => {
-    const onSeek = () => { video.removeEventListener("seeked", onSeek); resolve(); };
-    video.addEventListener("seeked", onSeek);
-    video.currentTime = Math.min(t, Math.max(0, (video.duration || t) - 0.04));
-  });
+  const target = Math.min(Math.max(t, 0), Math.max(0, (video.duration || t) - 0.04));
+  if (Math.abs((video.currentTime || 0) - target) > 0.03) {
+    await new Promise((resolve) => {
+      const onSeek = () => { video.removeEventListener("seeked", onSeek); resolve(); };
+      video.addEventListener("seeked", onSeek);
+      video.currentTime = target;
+    });
+  }
   const canvas = document.createElement("canvas");
   const scale = 640 / video.videoWidth;
   canvas.width = 640;
@@ -220,6 +223,7 @@ async function scoreUpload(file) {
   const times = [];
   for (let t = 0; t + 0.1 < duration; t = Math.round((t + 0.4) * 10) / 10) times.push(t);
   if (!times.length) throw new Error("That clip is too short to score.");
+  probEl.textContent = "…";
   const probs = [];
   const model = (modelSelect && modelSelect.value) || "Qwen/Qwen3.6-27B";
   for (let i = 0; i < times.length; i++) {
@@ -250,7 +254,7 @@ scrub.addEventListener("input", () => {
 });
 fileInput.addEventListener("change", () => {
   const file = fileInput.files && fileInput.files[0];
-  if (file) showUpload(file);
+  if (file) scoreUpload(file).catch((error) => setStatus(error.message));
 });
 document.querySelector("#upload-form").addEventListener("submit", (event) => {
   event.preventDefault();
