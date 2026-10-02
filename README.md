@@ -118,12 +118,57 @@ Valen reads JSONL. Each record is one pair clip, a yes/no question, and a hard l
 
 A negative example uses `"true": 0.0, "false": 1.0`. Training continues from the preview checkpoint at stage `vision_top` (or `warmup` if only the decision head should move). The held-out manifests are the eval and test sets.
 
-## Training curve
+## Training run
 
-The run that is logged today is a LoRA on [Qwen3.6-27B](https://wandb.ai/vastdata/team-43/runs/safeai-collision), trained with W&B Serverless SFT on the 240 train pairs. Batch size is 1 and the learning rate is 5e-5. Each step is one clip. The answer tokens are `true` or `false`.
+The finished run is a LoRA on [Qwen3.6-27B](https://wandb.ai/vastdata/team-43/runs/safeai-collision), trained with W&B Serverless SFT. Batch size is 1 and the learning rate is 5e-5. Each step is one train clip. The answer tokens are `true` or `false`. The job ran from 22:51:25 to 22:56:37 UTC on 2 Oct 2026. The adapter is artifact `safeai-collision:v1` (alias `step1`).
 
-![Training loss, gradient norm, and throughput](finetune/training-curve.png)
+| | Value |
+|---|---:|
+| Steps | 240 / 240 |
+| Step-loop GPU time | 183 s |
+| Loss, first step | 0.735 |
+| Loss, mean | 0.0638 |
+| Loss, lowest (step 48) | 4.0e-8 |
+| Loss, final step | 1.56e-5 |
+| Gradient norm, first → final | 84.7 → 7.3e-4 |
+| Throughput after warmup | ~80 tokens/s |
 
-Loss falls below 1e-4 within the first few steps, jumps again near step 120, and finishes near 1e-5. The step metrics are in `finetune/metrics.jsonl`.
+![Completed training loss, gradient norm, and throughput](finetune/training-curve.png)
+
+Loss falls below 1e-4 within the first few steps, jumps again near step 120, and finishes near 1e-5. Every step is in `finetune/metrics.jsonl`.
+
+## Train, eval, and test
+
+Each download contributes five pairs, and every pair from one download stays in the same split.
+
+| | Train | Eval | Test |
+|---|---:|---:|---:|
+| Downloads | 48 | 16 | 16 |
+| Pairs | 240 | 80 | 80 |
+| Collision pairs | 120 | 40 | 40 |
+| No-collision pairs | 120 | 40 | 40 |
+| Frames | 480 | 160 | 160 |
+| Frames with a person | 447 | 130 | 150 |
+| Frames with no box | 23 | 27 | 10 |
+| Person boxes | 1,932 | 314 | 531 |
+| Truck + car boxes | 118 | 24 | 44 |
+
+No YOLO file is missing. Forklifts are not a COCO class, so truck and car boxes are the closest machine signal in the sidecars.
+
+Collision downloads by the caption phrase that selected them:
+
+| Phrase | Train | Eval | Test |
+|---|---:|---:|---:|
+| interact | 13 | 3 | 1 |
+| walks toward | 4 | 1 | 2 |
+| approaching | 2 | 0 | 1 |
+| approaches | 1 | 2 | 0 |
+| toward the forklift | 2 | 1 | 0 |
+| toward a forklift | 1 | 0 | 1 |
+| toward the person | 0 | 1 | 1 |
+| makes contact | 1 | 0 | 0 |
+| runs toward | 0 | 0 | 1 |
+| runs away | 0 | 0 | 1 |
+| No-collision downloads | 24 | 8 | 8 |
 
 `collision-data/` is an earlier, smaller pull (one contact clip and one calm clip). The warehouse set above is the one to train on.
